@@ -3,7 +3,11 @@ package com.example.greengeeksweatherapp.Domains;
 public class Hourly {
     private String Hour;
     private int temp;
+
+    //private String tempType;
+
     private String picPath;
+
 
     public Hourly(String hour, int temp, String picPath) {
         Hour = hour;
