@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back_1"
-    tools:context=".activites.MainActivity">
+    tools:context=".activites.TomorrowActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,26 +17,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Today"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_marginTop="16dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/back_btn"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/back_btn_background">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mon June 17"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                android:layout_marginTop="8dp" />
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/back" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,41 +44,57 @@
                 android:background="@drawable/background_2"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageView"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    app:srcCompat="@drawable/cloudy_sunny" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:text="Mostly Cloudy"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_weight="0.5"
+                        app:srcCompat="@drawable/cloudy_sunny" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="25"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="43sp" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="H:27  L:17"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="0dp"
+                            android:text="Tomorrow"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="25"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="43sp" />
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mostly Cloudy"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,13 +109,13 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView423"
+                            android:id="@+id/imageView42"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/umbrella" />
 
                         <TextView
-                            android:id="@+id/textView623"
+                            android:id="@+id/textView62"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="22%"
@@ -108,7 +123,7 @@
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/textView713"
+                            android:id="@+id/textView71"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Humidity"
@@ -124,13 +139,13 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView424"
+                            android:id="@+id/imageView422"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/wind" />
 
                         <TextView
-                            android:id="@+id/textView624"
+                            android:id="@+id/textView622"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="12 km/h"
@@ -138,7 +153,7 @@
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/textView714"
+                            android:id="@+id/textView712"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Wind Speed"
@@ -154,13 +169,13 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:id="@+id/imageView42"
+                            android:id="@+id/imageView421"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/humidity" />
 
                         <TextView
-                            android:id="@+id/textView62"
+                            android:id="@+id/textView621"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="18%"
@@ -168,7 +183,7 @@
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/textView71"
+                            android:id="@+id/textView711"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Humidity"
@@ -178,40 +193,12 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Today"
-                    android:textColor="@color/yellow"
-                    android:textStyle="bold"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:id="@+id/nextBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Next 7 Days >"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/view"
+                android:id="@+id/view2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:nestedScrollingEnabled="true" />
 
         </LinearLayout>
     </ScrollView>
