@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    >
+
+
+    <!-- Custom Layout: Dark Theme -->
+    <item
+        android:id="@+id/nav_dark_theme"
+        android:title="Switch"
+        app:actionLayout="@layout/switch_item"
+        app:showAsAction="always"
+        />
+
+
+    <!-- Custom Layout: Dark Theme -->
+    <item
+        android:id="@+id/nav_metrics"
+        android:title="Switch"
+        app:actionLayout="@layout/switch_item"
+        app:showAsAction="always" />
+
+</menu>
