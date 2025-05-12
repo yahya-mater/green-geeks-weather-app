@@ -5,17 +5,21 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_1"
-    tools:context=".activites.TomorrowActivity">
+    style="@style/background_back_1"
+    tools:context=".activites.TomorrowActivity"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        style="@style/drawable_background_hourly_text"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/back_btn"
@@ -23,7 +27,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/back_btn_background">
+                style="@style/drawable_back_btn_background">
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -41,12 +45,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:background="@drawable/background_2"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/drawable_background_hourly_text"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -60,6 +64,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        style="@style/drawable_background_hourly_text"
                         android:layout_weight="0.5"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
@@ -70,6 +75,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="0dp"
                             android:text="Tomorrow"
+                            style="@style/drawable_background_hourly_text"
                             android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
@@ -82,6 +88,7 @@
                             android:text="25"
                             android:textAlignment="viewStart"
                             android:textColor="@color/white"
+                            style="@style/drawable_background_hourly_text"
                             android:textSize="43sp" />
 
                         <TextView
@@ -89,6 +96,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mostly Cloudy"
+                            style="@style/drawable_background_hourly_text"
                             android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
@@ -99,6 +107,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    style="@style/drawable_background_hourly_text"
                     android:orientation="horizontal">
 
                     <LinearLayout

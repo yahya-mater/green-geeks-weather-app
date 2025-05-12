@@ -5,7 +5,7 @@
     android:id="@+id/drawerlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_1"
+    style="@style/background_back_1"
     tools:context=".activites.MainActivity"
     tools:openDrawer="start">
 
@@ -52,7 +52,7 @@
                         android:gravity="center"
                         android:text="Today"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        style="@style/background_back_1"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                         android:gravity="center"
                         android:text="Mon June 17"
                         android:textAlignment="center"
-                        android:textColor="@color/white"
+                        style="@style/background_back_1"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:background="@drawable/background_2"
+                style="@style/drawable_background_2"
                 android:orientation="vertical">
 
                 <ImageView
@@ -245,7 +245,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Next 7 Days >"
-                    android:textColor="@color/white"
+                    style="@style/background_back_1"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>

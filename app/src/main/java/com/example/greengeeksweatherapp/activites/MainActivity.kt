@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
@@ -21,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.greengeeksweatherapp.Adapters.HourlyAdapter
 import com.example.greengeeksweatherapp.Domains.Hourly
 import com.example.greengeeksweatherapp.R
+import com.example.greengeeksweatherapp.search_page
 import com.google.android.material.navigation.NavigationView
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +47,13 @@ class MainActivity : AppCompatActivity() {
         menuHandler()
 
 
+        val image_trans = findViewById<ImageView>(R.id.imageView2)
+        image_trans.setOnClickListener {
+            val intent = Intent(this, search_page::class.java)
+            startActivity(intent)
+        }
+
+
     }
 
 
@@ -55,28 +65,48 @@ class MainActivity : AppCompatActivity() {
         val darkThemeLayout = darkThemeItem.actionView
         val darkThemeSwitch = darkThemeLayout?.findViewById<Switch>(R.id.setting_switch)
 
+
+        // Load preferences
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val isDarkTheme = prefs.getBoolean("dark_theme", false)
+
+        // Set the initial checked state based on the saved preference
+        darkThemeSwitch?.isChecked = isDarkTheme
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDarkTheme)
+                AppCompatDelegate.MODE_NIGHT_YES
+            else
+                AppCompatDelegate.MODE_NIGHT_NO
+        )
+
+        darkThemeSwitch?.setOnClickListener {
+            val isChecked = darkThemeSwitch.isChecked
+            Toast.makeText(
+                this,
+                "Dark theme is ${if (isChecked) "ON" else "OFF"}",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            AppCompatDelegate.setDefaultNightMode(
+                if (isChecked)
+                    AppCompatDelegate.MODE_NIGHT_YES
+                else
+                    AppCompatDelegate.MODE_NIGHT_NO
+            )
+
+            // Save the preference
+            val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+            prefs.edit() { putBoolean("dark_theme", isChecked) }
+        }
+
+
+
+
         val metricsItem = navigationView.menu.findItem(R.id.nav_metrics)
         metricsItem.title = "Metrics"
         val metricsLayout = metricsItem.actionView
         val metricsSwitch = metricsLayout?.findViewById<Switch>(R.id.setting_switch)
 
-        //val prefs = getSharedPreferences("settings", MODE_PRIVATE)
-
-        //darkThemeSwitch?.setOnCheckedChangeListener(null)
-        //darkThemeSwitch?.isChecked = prefs.getBoolean("dark_theme", false)
-        //darkThemeSwitch?.setOnTouchListener { _, _ -> true } // prevent drawer close
-        darkThemeSwitch?.setOnClickListener {
-            val isChecked = darkThemeSwitch.isChecked
-            Toast.makeText(this, "Dark theme is ${if (isChecked) "ON" else "OFF"}", Toast.LENGTH_SHORT).show()
-            //AppCompatDelegate.setDefaultNightMode(
-            //    if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-            //)
-            //prefs.edit().putBoolean("dark_theme", isChecked).apply()
-        }
-
-        //metricsSwitch?.setOnCheckedChangeListener(null)
-        //metricsSwitch?.isChecked = prefs.getBoolean("metrics", false)
-        //metricsSwitch?.setOnTouchListener { _, _ -> true }
         metricsSwitch?.setOnClickListener {
             val isChecked = metricsSwitch.isChecked
             Toast.makeText(this, "Metrics is ${if (isChecked) "ON" else "OFF"}", Toast.LENGTH_SHORT).show()
@@ -119,5 +149,6 @@ class MainActivity : AppCompatActivity() {
         /**/
 
     }
+
 
 }
