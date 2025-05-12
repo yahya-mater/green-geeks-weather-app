@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">green geeks weather app</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="home">Home</string>
+    <string name="metrics">Metrics</string>
 </resources>

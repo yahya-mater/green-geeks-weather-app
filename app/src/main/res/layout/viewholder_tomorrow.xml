@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:layout_margin="8dp"
-    android:background="@color/back_1">
+    style="@style/drawable_background_hourly">
 
     <TextView
         android:id="@+id/dayTxt"
+        style="@style/drawable_background_hourly_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -19,11 +20,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:contentDescription="image"
         android:id="@+id/pic"
+        style="@style/drawable_background_hourly_text"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
+        android:contentDescription="image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dayTxt"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,18 +33,20 @@
 
     <TextView
         android:id="@+id/statusTxt"
+        style="@style/drawable_background_hourly_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="status"
-        android:textSize="14sp"
-        android:textColor="@color/white"
         android:layout_marginStart="16dp"
+        android:text="status"
+        android:textColor="@color/white"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pic"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lowTxt"
+        style="@style/drawable_background_hourly_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -55,10 +59,11 @@
 
     <TextView
         android:id="@+id/highTxt"
+        style="@style/drawable_background_hourly_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20"
         android:layout_marginEnd="32dp"
+        android:text="20"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/lowTxt"

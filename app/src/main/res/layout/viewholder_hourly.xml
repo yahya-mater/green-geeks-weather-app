@@ -4,15 +4,13 @@
     android:layout_width="90dp"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-
     app:cardCornerRadius="10dp"
-
     app:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/backgroud_hourly"
+        style="@style/drawable_background_hourly"
         android:orientation="vertical">
 
         <TextView
@@ -22,7 +20,7 @@
             android:layout_margin="8dp"
             android:text="1 am"
             android:textAlignment="center"
-            android:textColor="#bfbcbc"
+            style="@style/drawable_background_hourly_text"
             android:textSize="14sp" />
 
         <ImageView
@@ -40,7 +38,7 @@
             android:layout_margin="8dp"
             android:text="20"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            style="@style/drawable_background_hourly_text"
             android:textSize="18sp" />
     </LinearLayout>
 

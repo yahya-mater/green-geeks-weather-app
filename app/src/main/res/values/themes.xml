@@ -1,10 +1,48 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.GreenGeeksWeatherApp" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/back_1</item>
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/yellow</item>
+        <item name="colorPrimaryVariant">@color/yellow</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
-    <style name="Theme.GreenGeeksWeatherApp" parent="Base.Theme.GreenGeeksWeatherApp" />
+    <style name="background_back_1">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/back_1</item>
+    </style>
+
+    <style name="background_back_2">
+        <item name="android:background">@color/white_back</item>
+    </style>
+
+    <style name="color_yellow">
+        <item name="android:textColor">@color/yellow</item>
+    </style>
+
+    <style name="background_white">
+        <item name="android:background">@color/back_1</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="drawable_background_2">
+        <item name="android:background">@drawable/background_2_light</item>
+    </style>
+
+    <style name="drawable_background_hourly">
+        <item name="android:background">@drawable/background_hourly_light</item>
+    </style>
+
+    <style name="drawable_background_hourly_text">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/background_hourly_light</item>
+    </style>
+
+    <style name="drawable_back_btn_background">
+        <item name="android:background">@drawable/back_btn_background_light</item>
+    </style>
+
+
 </resources>
