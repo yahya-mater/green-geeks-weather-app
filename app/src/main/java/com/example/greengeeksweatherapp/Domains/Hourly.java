@@ -2,14 +2,14 @@ package com.example.greengeeksweatherapp.Domains;
 
 public class Hourly {
     private String Hour;
-    private int temp;
+    private String temp;
 
     //private String tempType;
 
     private String picPath;
 
 
-    public Hourly(String hour, int temp, String picPath) {
+    public Hourly(String hour, String temp, String picPath) {
         Hour = hour;
         this.temp = temp;
         this.picPath = picPath;
@@ -23,11 +23,11 @@ public class Hourly {
         Hour = hour;
     }
 
-    public int getTemp() {
+    public String getTemp() {
         return temp;
     }
 
-    public void setTemp(int temp) {
+    public void setTemp(String temp) {
         this.temp = temp;
     }
 

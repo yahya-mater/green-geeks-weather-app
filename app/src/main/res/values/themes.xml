@@ -11,11 +11,11 @@
 
     <style name="background_back_1">
         <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/back_1</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="background_back_2">
-        <item name="android:background">@color/white_back</item>
+        <item name="android:background">@color/light_back_1</item>
     </style>
 
     <style name="color_yellow">
@@ -23,7 +23,7 @@
     </style>
 
     <style name="background_white">
-        <item name="android:background">@color/back_1</item>
+        <item name="android:background">@color/black</item>
         <item name="android:textColor">@color/white</item>
     </style>
 

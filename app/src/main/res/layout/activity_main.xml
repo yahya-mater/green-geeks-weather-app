@@ -70,7 +70,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/search_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -82,23 +82,23 @@
             </LinearLayout>
 
             <LinearLayout
+                style="@style/drawable_background_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                style="@style/drawable_background_2"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/WeatherTodayIcon"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     android:layout_margin="16dp"
                     app:srcCompat="@drawable/cloudy_sunny" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/WeatherTodayName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_margin="16dp"
                     android:text="Mostly Cloudy"
                     android:textAlignment="center"
@@ -106,7 +106,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/WeatherTodayTemp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -116,7 +116,7 @@
                     android:textSize="43sp" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/WeatherTodayHighLowTemp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="H:27  L:17"
@@ -143,7 +143,7 @@
                             app:srcCompat="@drawable/umbrella" />
 
                         <TextView
-                            android:id="@+id/textView623"
+                            android:id="@+id/WeatherTodayRainValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="22%"
@@ -154,7 +154,7 @@
                             android:id="@+id/textView713"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Humidity"
+                            android:text="Rain"
                             android:textAlignment="center"
                             android:textColor="@color/white" />
                     </LinearLayout>
@@ -173,7 +173,7 @@
                             app:srcCompat="@drawable/wind" />
 
                         <TextView
-                            android:id="@+id/textView624"
+                            android:id="@+id/WeatherTodayWindSpeed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="12 km/h"
@@ -203,7 +203,7 @@
                             app:srcCompat="@drawable/humidity" />
 
                         <TextView
-                            android:id="@+id/textView62"
+                            android:id="@+id/WeatherTodayHumidityValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="18%"

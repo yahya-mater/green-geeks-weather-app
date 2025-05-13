@@ -2,8 +2,6 @@ package com.example.greengeeksweatherapp.activites
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Switch
@@ -12,11 +10,11 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greengeeksweatherapp.Adapters.HourlyAdapter
@@ -24,7 +22,6 @@ import com.example.greengeeksweatherapp.Domains.Hourly
 import com.example.greengeeksweatherapp.R
 import com.example.greengeeksweatherapp.search_page
 import com.google.android.material.navigation.NavigationView
-import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,23 +38,66 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        initRecyclerView()
-        setVariable()
+        initNext7DaysButton()
         initMenu()
         menuHandler()
 
+        setTodaysWeatherInfo(
+            "snowy",
+            "Snowy",
+            "25C",
+            "28C",
+            "23C",
+            "22%",
+            "2km/h",
+            "18%"
+        )
 
-        val image_trans = findViewById<ImageView>(R.id.imageView2)
-        image_trans.setOnClickListener {
-            val intent = Intent(this, search_page::class.java)
-            startActivity(intent)
-        }
+        val items:ArrayList<Hourly> = ArrayList()
+        items.add(Hourly("10 pm", "6C", "cloudy_sunny"))
+        items.add(Hourly("11 pm", "5C", "cloudy"))
+        items.add(Hourly("12 pm", "4C", "snowy"))
+        items.add(Hourly("1 am", "5C", "cloudy"))
+
+        initRecyclerView(items)
+
 
 
     }
 
+    private fun setTodaysWeatherInfo(WeatherIcon:String="", WeatherName:String="", WeatherTemp:String="", WeatherTempHigh:String="", WeatherTempLow:String="", WeatherRainPer:String="", WeatherWindSpeed:String="",WeatherHumidityPer:String=""){
+        val WeatherTodayIcon = findViewById<ImageView>(R.id.WeatherTodayIcon)
+        val WeatherTodayName = findViewById<TextView>(R.id.WeatherTodayName)
+        val WeatherTodayTemp = findViewById<TextView>(R.id.WeatherTodayTemp)
+        val WeatherTodayHighLowTemp = findViewById<TextView>(R.id.WeatherTodayHighLowTemp)
 
-    private fun menuHandler() {
+        val WeatherTodayRainValue = findViewById<TextView>(R.id.WeatherTodayRainValue)
+        val WeatherTodayWindSpeed = findViewById<TextView>(R.id.WeatherTodayWindSpeed)
+        val WeatherTodayHumidityValue = findViewById<TextView>(R.id.WeatherTodayHumidityValue)
+
+        val drawableResourceId: Int = resources.getIdentifier(
+            WeatherIcon,
+            "drawable",
+            packageName
+        )
+
+        if (drawableResourceId != 0) {
+            WeatherTodayIcon.setImageResource(drawableResourceId)
+        } else {
+            Toast.makeText(this, "Drawable not found for: $WeatherIcon", Toast.LENGTH_SHORT).show()
+        }
+
+        WeatherTodayName.text = WeatherName
+        WeatherTodayTemp.text = WeatherTemp
+        WeatherTodayHighLowTemp.text = "H:" + WeatherTempHigh + "  L:" + WeatherTempHigh
+        WeatherTodayRainValue.text = WeatherRainPer
+        WeatherTodayWindSpeed.text = WeatherWindSpeed
+        WeatherTodayHumidityValue.text = WeatherHumidityPer
+
+    }
+
+
+    private fun initDarkThemeSwitch(){
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
         val darkThemeItem = navigationView.menu.findItem(R.id.nav_dark_theme)
@@ -98,9 +138,10 @@ class MainActivity : AppCompatActivity() {
             val prefs = getSharedPreferences("settings", MODE_PRIVATE)
             prefs.edit() { putBoolean("dark_theme", isChecked) }
         }
+    }
 
-
-
+    private fun initMetricsSwitch(){
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
         val metricsItem = navigationView.menu.findItem(R.id.nav_metrics)
         metricsItem.title = "Metrics"
@@ -114,33 +155,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun menuHandler() {
+        initDarkThemeSwitch()
+        initMetricsSwitch()
+    }
+
 
     private fun initMenu() {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerlayout)
         val menuBtn = findViewById<ImageButton>(R.id.menu_button)
+        val searchBtn = findViewById<ImageView>(R.id.search_button)
 
         menuBtn.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
 
         }
 
+        searchBtn.setOnClickListener {
+            val intent = Intent(this, search_page::class.java)
+            startActivity(intent)
+        }
+
     }
 
-    private fun setVariable() {
+    private fun initNext7DaysButton() {
         val next7DaysButton:TextView = findViewById(R.id.nextBtn)
         next7DaysButton.setOnClickListener {
             startActivity(Intent(this, TomorrowActivity::class.java))
         }
     }
 
-    private fun initRecyclerView(){
-        val items:ArrayList<Hourly> = ArrayList()
-        items.add(Hourly("10 pm", 6, "cloudy"))
-        items.add(Hourly("10 pm", 6, "cloudy"))
-        items.add(Hourly("10 pm", 6, "cloudy"))
-        items.add(Hourly("10 pm", 6, "cloudy"))
-
-
+    private fun initRecyclerView(items:ArrayList<Hourly>){
         recyclerView = findViewById(R.id.view)
         recyclerView.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false))
 
