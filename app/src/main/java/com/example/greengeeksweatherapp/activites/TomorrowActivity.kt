@@ -75,10 +75,25 @@ class TomorrowActivity : AppCompatActivity() {
 
                 //val iconf = it.weather[0].icon
 
-                val tempf =forecastRes.list[0].main.temp.toInt()
+                var tempf =forecastRes.list[0].main.temp.toInt()
                 val descriptionf = forecastRes.list[0].weather[0].main
                 val timeStamp = SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
                 val daytimeStamp = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
+                // Load preferences
+                val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+                val isMetrics = prefs.getBoolean("metrics", false)
+
+                if(isMetrics){
+                    tempf=(tempf*(9/5))+32
+
+                        tempType="°F"
+                        speedType = "mph"
+                    }
+                else
+                {
+                    tempType="°C"
+                    speedType = "km\\h"
+                }
 
                 items.add(TomorrowDomain(
                     daytimeStamp,
@@ -95,10 +110,14 @@ class TomorrowActivity : AppCompatActivity() {
 
                     //val iconf = it.weather[0].icon
 
-                    val tempf =it.main.temp.toInt()
+                    var tempf =it.main.temp.toInt()
                     val descriptionf = it.weather[0].main
                     val timeStamp = SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(it.dt*1000))
                     val daytimeStamp = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(it.dt*1000))
+
+                    if(isMetrics){
+                        tempf=(tempf*(9/5))+32
+                    }
 
                     if(timeStamp!="12:00 AM"){
 

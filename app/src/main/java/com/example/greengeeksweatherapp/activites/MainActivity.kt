@@ -130,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun initMetricsSwitch(){
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
@@ -137,11 +138,43 @@ class MainActivity : AppCompatActivity() {
         metricsItem.title = "Metrics"
         val metricsLayout = metricsItem.actionView
         val metricsSwitch = metricsLayout?.findViewById<Switch>(R.id.setting_switch)
+        // Load preferences
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val isMetrics = prefs.getBoolean("metrics", false)
+
+        // Set the initial checked state based on the saved preference
+        metricsSwitch?.isChecked = isMetrics
+
+            if (isMetrics)
+            {
+                tempType="°F"
+                speedType = "mph"
+            }
+            else
+            {
+                tempType="°C"
+                speedType = "km\\h"
+            }
+
 
         metricsSwitch?.setOnClickListener {
             val isChecked = metricsSwitch.isChecked
             Toast.makeText(this, "Metrics is ${if (isChecked) "ON" else "OFF"}", Toast.LENGTH_SHORT).show()
             //prefs.edit().putBoolean("metrics", isChecked).apply()
+
+            if(isChecked) {
+                tempType="°F"
+                speedType = "mph"
+            }
+            else{
+                tempType="°C"
+                speedType = "km\\h"
+            }
+            // Save the preference
+            val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+            prefs.edit() { putBoolean("metrics", isChecked) }
+
+            fetchWeatherData("Aţ Ţafīlah,JO")
         }
     }
 
@@ -191,16 +224,24 @@ class MainActivity : AppCompatActivity() {
                 Log.d("WeatherDebug", "API response: ${response}")
 
 
-                val temp = response.main.temp.toInt()
+                var temp = response.main.temp.toInt()
                 val pressure = response.main.pressure
                 val humidity = response.main.humidity
                 val Maindescription = response.weather[0].main//main description(e.g."Rain")
                 val icon = response.weather[0].icon
                 val description = response.weather[0].description//detailed description(e.g."light Rain ")
-                val windSpeed = response.wind.speed
+                var windSpeed = response.wind.speed
                 val sunrise = response.sys.sunrise
                 val sunset = response.sys.sunset
 
+                // Load preferences
+                val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+                val isMetrics = prefs.getBoolean("metrics", false)
+
+                if(isMetrics){
+                    temp=(temp*(9/5))+32
+                    windSpeed /= 1.6
+                }
                 setTodaysWeatherInfo(Maindescription.toLowerCase().replace(" ","_"),description,temp.toString(),"?","?","0%",windSpeed.toString(),humidity.toString()+"%")
 
                 val forecastRes=RetroFitclient.api.getForecastData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
