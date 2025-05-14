@@ -2,6 +2,7 @@ package com.example.greengeeksweatherapp.activites
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Switch
@@ -15,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greengeeksweatherapp.Adapters.HourlyAdapter
@@ -22,6 +24,7 @@ import com.example.greengeeksweatherapp.Domains.Hourly
 import com.example.greengeeksweatherapp.R
 import com.example.greengeeksweatherapp.search_page
 import com.google.android.material.navigation.NavigationView
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,16 +45,16 @@ class MainActivity : AppCompatActivity() {
         initMenu()
         menuHandler()
 
-        setTodaysWeatherInfo(
-            "snowy",
-            "Snowy",
-            "25C",
-            "28C",
-            "23C",
-            "22%",
-            "2km/h",
-            "18%"
-        )
+//        setTodaysWeatherInfo(
+//            "snowy",
+//            "Snowy",
+//            "25C",
+//            "28C",
+//            "23C",
+//            "22%",
+//            "2km/h",
+//            "18%"
+//        )
 
         val items:ArrayList<Hourly> = ArrayList()
         items.add(Hourly("10 pm", "6C", "cloudy_sunny"))
@@ -63,15 +66,16 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        fetchWeatherData("Aţ Ţafīlah,JO")
     }
 
     private fun setTodaysWeatherInfo(WeatherIcon:String="", WeatherName:String="", WeatherTemp:String="", WeatherTempHigh:String="", WeatherTempLow:String="", WeatherRainPer:String="", WeatherWindSpeed:String="",WeatherHumidityPer:String=""){
         val WeatherTodayIcon = findViewById<ImageView>(R.id.WeatherTodayIcon)
-        val WeatherTodayName = findViewById<TextView>(R.id.WeatherTodayName)
+        val WeatherTodayName = findViewById<TextView>(R.id.WeatherTodayName)//description
         val WeatherTodayTemp = findViewById<TextView>(R.id.WeatherTodayTemp)
         val WeatherTodayHighLowTemp = findViewById<TextView>(R.id.WeatherTodayHighLowTemp)
 
-        val WeatherTodayRainValue = findViewById<TextView>(R.id.WeatherTodayRainValue)
+        val WeatherTodayRainValue = findViewById<TextView>(R.id.WeatherTodayRainValue)//humidity
         val WeatherTodayWindSpeed = findViewById<TextView>(R.id.WeatherTodayWindSpeed)
         val WeatherTodayHumidityValue = findViewById<TextView>(R.id.WeatherTodayHumidityValue)
 
@@ -194,6 +198,38 @@ class MainActivity : AppCompatActivity() {
         /**/
 
     }
+    private fun fetchWeatherData(cityCountry:String){
+        lifecycleScope.launch{
+            try {
+                val response=RetroFitclient.api.getWeatherData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
+                Log.d("WeatherDebug", "API response: ${response}")
+
+
+                val temp = response.main.temp
+                val pressure = response.main.pressure
+                val humidity = response.main.humidity
+                val Maindescription = response.weather[0].main//main description(e.g."Rain")
+                val icon = response.weather[0].icon
+                val description = response.weather[0].description//detailed description(e.g."light Rain ")
+                val windSpeed = response.wind.speed
+                val sunrise = response.sys.sunrise
+                val sunset = response.sys.sunset
+
+                setTodaysWeatherInfo("snowy",description,temp.toString(),"?","?","%",windSpeed.toString(),humidity.toString())
+            }catch (e: Exception) {
+                Log.e("WeatherDebug", "API call failed: ${e.message}", e)
+                Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 
 
 }
+
+
+
+
+
+
+
+
