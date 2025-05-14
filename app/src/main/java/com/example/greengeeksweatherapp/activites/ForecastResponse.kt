@@ -14,6 +14,7 @@ data class ForecastList(
 
 data class MainF(
     val temp: Double,
+    val humidity: Int
 
 )
 

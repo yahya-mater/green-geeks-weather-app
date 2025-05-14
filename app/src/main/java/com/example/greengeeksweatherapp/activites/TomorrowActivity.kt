@@ -88,9 +88,27 @@ class TomorrowActivity : AppCompatActivity() {
                 val forecastRes=RetroFitclient.api.getForecastData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
 
                 val items:ArrayList<TomorrowDomain> = ArrayList()
+
+                //val iconf = it.weather[0].icon
+
+                val tempf =forecastRes.list[0].main.temp.toInt()
+                val descriptionf = forecastRes.list[0].weather[0].main
+                val timeStamp = SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
+                val daytimeStamp = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
+
+                items.add(TomorrowDomain(
+                    daytimeStamp,
+                    descriptionf.toLowerCase().replace(" ","_") ,
+                    descriptionf.toLowerCase().replace(" ","_"),
+                    "",
+                    tempf.toString() + tempType)
+                )
+
                 var currentDay = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
+                var i =0
 
                 for (it in forecastRes.list) {
+
                     //val iconf = it.weather[0].icon
 
                     val tempf =it.main.temp.toInt()
@@ -98,6 +116,14 @@ class TomorrowActivity : AppCompatActivity() {
                     val timeStamp = SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(it.dt*1000))
                     val daytimeStamp = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(it.dt*1000))
 
+                    if(timeStamp!="12:00 AM"){
+
+                        if(i==0){
+                            i+=1
+                            setTomorrowWeatherInfo(descriptionf,it.weather[0].description,tempf.toString(),"","","?",it.wind.speed.toString(),it.main.humidity.toString())
+                        }
+                        continue
+                    }
                     items.add(TomorrowDomain(daytimeStamp, descriptionf.toLowerCase().replace(" ","_") ,descriptionf.toLowerCase().replace(" ","_"),"",tempf.toString() + tempType))
                     Log.e("WeatherDebug", "descriptionf failed: ${descriptionf.toLowerCase().replace(" ","_")}")
                 }
