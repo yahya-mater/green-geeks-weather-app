@@ -25,6 +25,9 @@ import com.example.greengeeksweatherapp.R
 import com.example.greengeeksweatherapp.search_page
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,17 +59,20 @@ class MainActivity : AppCompatActivity() {
 //            "18%"
 //        )
 
-        val items:ArrayList<Hourly> = ArrayList()
-        items.add(Hourly("10 pm", "6C", "cloudy_sunny"))
-        items.add(Hourly("11 pm", "5C", "cloudy"))
-        items.add(Hourly("12 pm", "4C", "snowy"))
-        items.add(Hourly("1 am", "5C", "cloudy"))
-
-        initRecyclerView(items)
+//        val items:ArrayList<Hourly> = ArrayList()
+//        items.add(Hourly("10 pm", "6C", "cloudy_sunny"))
+//        items.add(Hourly("11 pm", "5C", "cloudy"))
+//        items.add(Hourly("12 pm", "4C", "snowy"))
+//        items.add(Hourly("1 am", "5C", "cloudy"))
+//
+//        initRecyclerView(items)
 
 
 
         fetchWeatherData("Aţ Ţafīlah,JO")
+
+
+
     }
 
     private fun setTodaysWeatherInfo(WeatherIcon:String="", WeatherName:String="", WeatherTemp:String="", WeatherTempHigh:String="", WeatherTempLow:String="", WeatherRainPer:String="", WeatherWindSpeed:String="",WeatherHumidityPer:String=""){
@@ -205,7 +211,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("WeatherDebug", "API response: ${response}")
 
 
-                val temp = response.main.temp
+                val temp = response.main.temp.toInt()
                 val pressure = response.main.pressure
                 val humidity = response.main.humidity
                 val Maindescription = response.weather[0].main//main description(e.g."Rain")
@@ -216,6 +222,36 @@ class MainActivity : AppCompatActivity() {
                 val sunset = response.sys.sunset
 
                 setTodaysWeatherInfo("snowy",description,temp.toString(),"?","?","%",windSpeed.toString(),humidity.toString())
+
+                val forecastRes=RetroFitclient.api.getForecastData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
+
+                val items:ArrayList<Hourly> = ArrayList()
+                var currentDay = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
+                var i=0
+                var TT="Today"
+                for (it in forecastRes.list) {
+                    //val iconf = it.weather[0].icon
+
+                    val tempf =it.main.temp.toInt()
+                    val descriptionf = it.weather[0].main
+                    val timeStamp = "$TT\n"+SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(it.dt*1000))
+                    val daytimeStamp = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(it.dt*1000))
+
+                    if(currentDay != daytimeStamp){
+                        TT="Tomorrow"
+                        i+=1
+                        if(i==10){
+                            break
+                        }
+                    }
+
+                    items.add(Hourly(timeStamp, tempf.toString(), descriptionf))
+
+                }
+                initRecyclerView(items)
+
+
+
             }catch (e: Exception) {
                 Log.e("WeatherDebug", "API call failed: ${e.message}", e)
                 Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()

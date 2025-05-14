@@ -2,10 +2,16 @@ package com.example.greengeeksweatherapp.activites
 
 
 data class WeatherResponse(
+    val Coord:coord,
     val main: Main,
     val weather: List<Weather>,
     val wind: Wind,
     val sys: Sys
+)
+
+data class coord(
+    val lon:Long,
+    val lat:Long
 )
 
 data class Main(
