@@ -25,7 +25,7 @@ import java.util.Locale
 
 class TomorrowActivity : AppCompatActivity() {
 
-    private lateinit var adapterTomorrow: RecyclerView.Adapter<TomorrowAdapter.ViewHolder>
+    private lateinit var adapterTomorrow: TomorrowAdapter
     private lateinit var recyclerView: RecyclerView
 
 
@@ -69,22 +69,6 @@ class TomorrowActivity : AppCompatActivity() {
     private fun fetchWeatherData(cityCountry:String){
         lifecycleScope.launch{
             try {
-                val response=RetroFitclient.api.getWeatherData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
-                Log.d("WeatherDebug", "API response: ${response}")
-
-
-                val temp = response.main.temp.toInt()
-                val pressure = response.main.pressure
-                val humidity = response.main.humidity
-                val Maindescription = response.weather[0].main//main description(e.g."Rain")
-                val icon = response.weather[0].icon
-                val description = response.weather[0].description//detailed description(e.g."light Rain ")
-                val windSpeed = response.wind.speed
-                val sunrise = response.sys.sunrise
-                val sunset = response.sys.sunset
-
-                setTomorrowWeatherInfo(Maindescription.toLowerCase().replace(" ","_"),description,temp.toString(),"?","?","0%",windSpeed.toString(),humidity.toString()+"%")
-
                 val forecastRes=RetroFitclient.api.getForecastData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
 
                 val items:ArrayList<TomorrowDomain> = ArrayList()
@@ -120,7 +104,7 @@ class TomorrowActivity : AppCompatActivity() {
 
                         if(i==0){
                             i+=1
-                            setTomorrowWeatherInfo(descriptionf,it.weather[0].description,tempf.toString(),"","","?",it.wind.speed.toString(),it.main.humidity.toString())
+                            setTomorrowWeatherInfo(descriptionf.toLowerCase(),it.weather[0].description,tempf.toString(),"","","0%",it.wind.speed.toString(),it.main.humidity.toString()+"%")
                         }
                         continue
                     }

@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.greengeeksweatherapp.Adapters.HourlyAdapter
 import com.example.greengeeksweatherapp.Domains.Hourly
 import com.example.greengeeksweatherapp.R
-import com.example.greengeeksweatherapp.search_page
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -31,7 +30,7 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var adapterHourly: RecyclerView.Adapter<HourlyAdapter.ViewHolder>
+    private lateinit var adapterHourly: HourlyAdapter
     private lateinit var recyclerView: RecyclerView
 
     private var tempType:String = "°C"//"°F"
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        initNext7DaysButton()
+        initNext5DaysButton()
         initMenu()
         menuHandler()
 
@@ -163,13 +162,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchBtn.setOnClickListener {
-            val intent = Intent(this, search_page::class.java)
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
 
     }
 
-    private fun initNext7DaysButton() {
+    private fun initNext5DaysButton() {
         val next7DaysButton:TextView = findViewById(R.id.nextBtn)
         next7DaysButton.setOnClickListener {
             startActivity(Intent(this, TomorrowActivity::class.java))
