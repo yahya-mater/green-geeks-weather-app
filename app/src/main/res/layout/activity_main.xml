@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_margin="16dp"
-                    app:srcCompat="@drawable/cloudy_sunny" />
+                    app:srcCompat="@drawable/few_clouds" />
 
                 <TextView
                     android:id="@+id/WeatherTodayName"

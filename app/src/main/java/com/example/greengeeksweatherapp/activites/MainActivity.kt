@@ -34,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapterHourly: RecyclerView.Adapter<HourlyAdapter.ViewHolder>
     private lateinit var recyclerView: RecyclerView
 
+    private var tempType:String = "°C"//"°F"
+    private var speedType:String = "km\\h"//""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -48,31 +51,9 @@ class MainActivity : AppCompatActivity() {
         initMenu()
         menuHandler()
 
-//        setTodaysWeatherInfo(
-//            "snowy",
-//            "Snowy",
-//            "25C",
-//            "28C",
-//            "23C",
-//            "22%",
-//            "2km/h",
-//            "18%"
-//        )
-
-//        val items:ArrayList<Hourly> = ArrayList()
-//        items.add(Hourly("10 pm", "6C", "cloudy_sunny"))
-//        items.add(Hourly("11 pm", "5C", "cloudy"))
-//        items.add(Hourly("12 pm", "4C", "snowy"))
-//        items.add(Hourly("1 am", "5C", "cloudy"))
-//
-//        initRecyclerView(items)
-
 
 
         fetchWeatherData("Aţ Ţafīlah,JO")
-
-
-
     }
 
     private fun setTodaysWeatherInfo(WeatherIcon:String="", WeatherName:String="", WeatherTemp:String="", WeatherTempHigh:String="", WeatherTempLow:String="", WeatherRainPer:String="", WeatherWindSpeed:String="",WeatherHumidityPer:String=""){
@@ -98,10 +79,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         WeatherTodayName.text = WeatherName
-        WeatherTodayTemp.text = WeatherTemp
+        WeatherTodayTemp.text = WeatherTemp + tempType
         WeatherTodayHighLowTemp.text = "H:" + WeatherTempHigh + "  L:" + WeatherTempHigh
         WeatherTodayRainValue.text = WeatherRainPer
-        WeatherTodayWindSpeed.text = WeatherWindSpeed
+        WeatherTodayWindSpeed.text = WeatherWindSpeed + speedType
         WeatherTodayHumidityValue.text = WeatherHumidityPer
 
     }
@@ -221,7 +202,7 @@ class MainActivity : AppCompatActivity() {
                 val sunrise = response.sys.sunrise
                 val sunset = response.sys.sunset
 
-                setTodaysWeatherInfo("snowy",description,temp.toString(),"?","?","%",windSpeed.toString(),humidity.toString())
+                setTodaysWeatherInfo(Maindescription.toLowerCase().replace(" ","_"),description,temp.toString(),"?","?","0%",windSpeed.toString(),humidity.toString()+"%")
 
                 val forecastRes=RetroFitclient.api.getForecastData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
 
@@ -245,8 +226,8 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
-                    items.add(Hourly(timeStamp, tempf.toString(), descriptionf))
-
+                    items.add(Hourly(timeStamp, tempf.toString() + tempType, descriptionf.toLowerCase().replace(" ","_")))
+                    Log.e("WeatherDebug", "descriptionf failed: ${descriptionf.toLowerCase().replace(" ","_")}")
                 }
                 initRecyclerView(items)
 
