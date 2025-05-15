@@ -37,6 +37,7 @@ import com.example.notification.notificationID
 import com.example.notification.titleExtra
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -52,6 +53,8 @@ class MainActivity : AppCompatActivity() {
 
     private var tempType:String = "°C"//"°F"
     private var speedType:String = "km\\h"//""
+
+    private var cityCountry:String = "Aţ Ţafīlah,JO"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,9 +76,28 @@ class MainActivity : AppCompatActivity() {
         initMenu()
         menuHandler()
 
+        initCity()
+        fetchWeatherData(cityCountry)
+    }
 
+    private fun setCityName(name:String){
+        cityCountry = name
+        // Save the preference
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        prefs.edit() { putString("currentCity", name) }
+    }
 
-        fetchWeatherData("Aţ Ţafīlah,JO")
+    private fun initCity(){
+        val cityNameTextView = findViewById<TextView>(R.id.cityName)
+        cityNameTextView.text = cityCountry//default
+
+        // Load preferences
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val prefsCity = prefs.getString("currentCity", cityCountry)
+        if (prefsCity != null) {
+            cityNameTextView.text = prefsCity
+            cityCountry = prefsCity
+        }
     }
 
     private fun setTodaysWeatherInfo(WeatherIcon:String="", WeatherName:String="", WeatherTemp:String="", WeatherTempHigh:String="", WeatherTempLow:String="", WeatherRainPer:String="", WeatherWindSpeed:String="",WeatherHumidityPer:String=""){
@@ -168,16 +190,13 @@ class MainActivity : AppCompatActivity() {
         // Set the initial checked state based on the saved preference
         metricsSwitch?.isChecked = isMetrics
 
-            if (isMetrics)
-            {
-                tempType="°F"
-                speedType = "mph"
-            }
-            else
-            {
-                tempType="°C"
-                speedType = "km\\h"
-            }
+        if (isMetrics){
+            tempType="°F"
+            speedType = "mph"
+        }else{
+            tempType="°C"
+            speedType = "km\\h"
+        }
 
 
         metricsSwitch?.setOnClickListener {

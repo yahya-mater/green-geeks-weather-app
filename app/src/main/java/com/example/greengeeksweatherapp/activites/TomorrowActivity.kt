@@ -32,6 +32,8 @@ class TomorrowActivity : AppCompatActivity() {
     private var tempType:String = "°C"
     private var speedType:String = "km\\h"
 
+    private var cityCountry:String = "Aţ Ţafīlah,JO"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,7 +46,17 @@ class TomorrowActivity : AppCompatActivity() {
 
         initBackButton()
 
-        fetchWeatherData("Aţ Ţafīlah,JO")
+        initCity()
+        fetchWeatherData(cityCountry)
+    }
+    private fun initCity(){
+
+        // Load preferences
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val prefsCity = prefs.getString("currentCity", cityCountry)
+        if (prefsCity != null) {
+            cityCountry = prefsCity
+        }
     }
 
     private fun initBackButton() {

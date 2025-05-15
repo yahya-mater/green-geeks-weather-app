@@ -26,9 +26,18 @@
                 android:orientation="horizontal"
                 android:layoutDirection="ltr">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/back_btn"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    style="@style/drawable_back_btn_background">
+
+
                 <ImageButton
                     android:id="@+id/menu_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="0.2"
@@ -37,6 +46,7 @@
                     android:background="@android:color/transparent"
 
                     android:src="@drawable/drawer_menu" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -45,7 +55,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/cityName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -69,15 +79,30 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/search_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/something"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="16dp"
+                    style="@style/drawable_back_btn_background">
 
-                    android:layout_weight="0.2"
-                    android:padding="0dp"
-                    app:srcCompat="@android:drawable/ic_menu_search" />
+
+                    <ImageView
+                        android:id="@+id/search_button"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="image"
+
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@android:drawable/ic_menu_search" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
@@ -264,15 +289,15 @@
 
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_marginTop="25dp"
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:layout_marginTop="25dp"
         android:fitsSystemWindows="true"
+        android:visibility="visible"
         app:headerLayout="@layout/inner_layout"
-        app:menu="@menu/drawer_items"
-        />
+        app:menu="@menu/drawer_items" />
 
 
 

@@ -9,10 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.greengeeksweatherapp.Domains.CityData
 import com.example.greengeeksweatherapp.R
 
-class CityAdapter(var cList:List<CityData>): RecyclerView.Adapter<CityAdapter.CityViewHolder>() {
+class CityAdapter(
+    var cList:List<CityData>,
+    private val onItemClick: (CityData) -> Unit
+): RecyclerView.Adapter<CityAdapter.CityViewHolder>() {
 
     inner class CityViewHolder(itemView:View): RecyclerView.ViewHolder(itemView){
         val nameTextView:TextView = itemView.findViewById(R.id.resultTxt)
+        init {
+            itemView.setOnClickListener {
+                onItemClick(cList[adapterPosition])
+            }
+        }
     }
 
     fun setFilteredList(cList:List<CityData>){
@@ -26,7 +34,7 @@ class CityAdapter(var cList:List<CityData>): RecyclerView.Adapter<CityAdapter.Ci
     }
 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
-        holder.nameTextView.text = cList[position].Name
+        holder.nameTextView.text = cList[position].name
     }
 
     override fun getItemCount(): Int {

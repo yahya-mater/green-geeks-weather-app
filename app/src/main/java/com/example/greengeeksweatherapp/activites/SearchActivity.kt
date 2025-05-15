@@ -2,6 +2,7 @@ package com.example.greengeeksweatherapp.activites
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,10 @@ import com.example.greengeeksweatherapp.Domains.TomorrowDomain
 import com.example.greengeeksweatherapp.R
 import com.google.android.material.textfield.TextInputEditText
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.edit
 import java.util.Locale
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var adapterCity: CityAdapter
@@ -25,6 +29,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
 
     private var resultsList:ArrayList<CityData> = ArrayList()
+    private lateinit var regions: List<CityData>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,12 +45,12 @@ class SearchActivity : AppCompatActivity() {
         }
 
         val items:ArrayList<CityData> = ArrayList()
-        items.add(CityData("something 1"))
-        items.add(CityData("something 2"))
-        items.add(CityData("something 3"))
-        items.add(CityData("something 4"))
-        items.add(CityData("something 5"))
-        items.add(CityData("something 6"))
+        regions = parseRegions()
+
+        for (region in regions) {
+            items.add(region)
+        }
+
         initRecyclerView(items)
 
         val back_btn = findViewById<ConstraintLayout>(R.id.back_btn)
@@ -55,6 +60,18 @@ class SearchActivity : AppCompatActivity() {
         }
 
     }
+    private fun getStates(): String {
+        val inputStream = resources.openRawResource(R.raw.states)
+        return inputStream.bufferedReader().use { it.readText() }
+    }
+
+    private fun parseRegions(): List<CityData> {
+        val json = getStates()
+        val gson = Gson()
+        val type = object : TypeToken<List<CityData>>() {}.type
+        return gson.fromJson(json, type)
+    }
+
     private fun initRecyclerView(items:ArrayList<CityData>){
         resultsList = items
         recyclerView = findViewById(R.id.search_results)
@@ -63,7 +80,10 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapterCity = CityAdapter(items)
+        adapterCity = CityAdapter(items) { selectedCity ->
+            onCityItemClicked(selectedCity) // 💥 Trigger callback
+        }
+
         recyclerView.adapter = adapterCity
 
 
@@ -80,12 +100,24 @@ class SearchActivity : AppCompatActivity() {
         })
 
     }
+    private fun setCityName(name:String){
+        // Save the preference
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        prefs.edit() { putString("currentCity", name) }
+    }
+
+    private fun onCityItemClicked(selectedCity: CityData) {
+        Toast.makeText(this, "Selected: ${selectedCity.name}", Toast.LENGTH_SHORT).show()
+        setCityName(selectedCity.name)
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 
     private fun filterList(query: String?) {
         if(query != null){
             val filteredList = ArrayList<CityData>()
             for(i in resultsList){
-                if(i.Name.lowercase(Locale.ROOT).contains(query)){
+                if(i.name.lowercase(Locale.ROOT).contains(query)){
                     filteredList.add(i)
                 }
             }
@@ -99,3 +131,4 @@ class SearchActivity : AppCompatActivity() {
 
 
 }
+
