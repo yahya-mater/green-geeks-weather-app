@@ -27,6 +27,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.round
+import kotlin.math.roundToLong
 
 class MainActivity : AppCompatActivity() {
 
@@ -241,6 +243,7 @@ class MainActivity : AppCompatActivity() {
                 if(isMetrics){
                     temp=(temp*(9/5))+32
                     windSpeed /= 1.6
+                    windSpeed = round(windSpeed)
                 }
                 setTodaysWeatherInfo(Maindescription.toLowerCase().replace(" ","_"),description,temp.toString(),"?","?","0%",windSpeed.toString(),humidity.toString()+"%")
 
@@ -253,7 +256,7 @@ class MainActivity : AppCompatActivity() {
                 for (it in forecastRes.list) {
                     //val iconf = it.weather[0].icon
 
-                    val tempf =it.main.temp.toInt()
+                    var tempf =it.main.temp.toInt()
                     val descriptionf = it.weather[0].main
                     val timeStamp = "$TT\n"+SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(it.dt*1000))
                     val daytimeStamp = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(it.dt*1000))
@@ -264,6 +267,9 @@ class MainActivity : AppCompatActivity() {
                         if(i==10){
                             break
                         }
+                    }
+                    if(isMetrics){
+                        tempf=(tempf*(9/5))+32
                     }
 
                     items.add(Hourly(timeStamp, tempf.toString() + tempType, descriptionf.toLowerCase().replace(" ","_")))

@@ -104,8 +104,9 @@ class TomorrowActivity : AppCompatActivity() {
                 )
 
                 var currentDay = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
-                var i =0
 
+
+                val detailedTomorrowList:ArrayList<ForecastList> = ArrayList()
                 for (it in forecastRes.list) {
 
                     //val iconf = it.weather[0].icon
@@ -119,17 +120,37 @@ class TomorrowActivity : AppCompatActivity() {
                         tempf=(tempf*(9/5))+32
                     }
 
-                    if(timeStamp!="12:00 AM"){
-
-                        if(i==0){
-                            i+=1
-                            setTomorrowWeatherInfo(descriptionf.toLowerCase(),it.weather[0].description,tempf.toString(),"","","0%",it.wind.speed.toString(),it.main.humidity.toString()+"%")
-                        }
-                        continue
+                    if(timeStamp=="12:00 AM"){
+                        detailedTomorrowList.add(it)
+                        items.add(TomorrowDomain(daytimeStamp, descriptionf.toLowerCase().replace(" ","_") ,descriptionf.toLowerCase().replace(" ","_"),"",tempf.toString() + tempType))
                     }
-                    items.add(TomorrowDomain(daytimeStamp, descriptionf.toLowerCase().replace(" ","_") ,descriptionf.toLowerCase().replace(" ","_"),"",tempf.toString() + tempType))
-                    Log.e("WeatherDebug", "descriptionf failed: ${descriptionf.toLowerCase().replace(" ","_")}")
+
+
                 }
+                var tomorrow:ForecastList = detailedTomorrowList[0]
+                for (i in detailedTomorrowList){
+                    var temp:String = i.main.temp.toInt().toString()
+                    if(isMetrics){
+                        temp = ((i.main.temp.toInt()*(9/5))+32).toString()
+                    }
+                    if (items[1].lowTemp == (temp + tempType)){
+                        tomorrow = i
+                        break
+                    }
+                }
+                val tomorrowDetails = tomorrow
+                var tomorrowTemp = tomorrowDetails.main.temp.toInt()
+                if(isMetrics){
+                    tomorrowTemp=(tomorrowTemp*(9/5))+32
+                }
+
+                setTomorrowWeatherInfo(descriptionf.toLowerCase(),tomorrowDetails.weather[0].description,tomorrowTemp.toString(),"","","0%",tomorrowDetails.wind.speed.toString(),tomorrowDetails.main.humidity.toString()+"%")
+
+                items.removeAt(0)
+                items.removeAt(1)
+                items[0].day = "Tomorrow"
+
+
                 initRecyclerView(items)
 
 
