@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
             val prefs = getSharedPreferences("settings", MODE_PRIVATE)
             prefs.edit() { putBoolean("metrics", isChecked) }
 
-            fetchWeatherData("Aţ Ţafīlah,JO")
+            fetchWeatherData(cityCountry)
         }
     }
 
@@ -260,6 +260,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchWeatherData(cityCountry:String){
+        val sunRiseTextView = findViewById<TextView>(R.id.sunRiseTextView)
+        val sunSetTextView = findViewById<TextView>(R.id.sunSetTextView)
         lifecycleScope.launch{
             try {
                 val response=RetroFitclient.api.getWeatherData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
@@ -275,6 +277,9 @@ class MainActivity : AppCompatActivity() {
                 var windSpeed = response.wind.speed
                 val sunrise = response.sys.sunrise
                 val sunset = response.sys.sunset
+
+                sunRiseTextView.text = SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(sunrise*1000))//sunrise.toString()
+                sunSetTextView.text = SimpleDateFormat("h:mm a", Locale.ENGLISH).format(Date(sunset*1000))//sunset.toString()
 
                 // Load preferences
                 val prefs = getSharedPreferences("settings", MODE_PRIVATE)
