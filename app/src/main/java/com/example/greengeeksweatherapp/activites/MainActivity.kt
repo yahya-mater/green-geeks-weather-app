@@ -1,6 +1,13 @@
 package com.example.greengeeksweatherapp.activites
 
+import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
@@ -22,9 +29,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.greengeeksweatherapp.Adapters.HourlyAdapter
 import com.example.greengeeksweatherapp.Domains.Hourly
 import com.example.greengeeksweatherapp.R
+import com.example.greengeeksweatherapp.databinding.ActivityMainBinding
+import com.example.notification.Notification
+import com.example.notification.channelID
+import com.example.notification.messageExtra
+import com.example.notification.notificationID
+import com.example.notification.titleExtra
 import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.round
@@ -34,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var adapterHourly: HourlyAdapter
     private lateinit var recyclerView: RecyclerView
+    private lateinit var binding: ActivityMainBinding
 
     private var tempType:String = "°C"//"°F"
     private var speedType:String = "km\\h"//""
@@ -41,13 +56,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        createNotificationChannel()
+        scheduleDailyNotification()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerlayout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 100)
+        }
         initNext5DaysButton()
         initMenu()
         menuHandler()
@@ -132,7 +153,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    @SuppressLint("SuspiciousIndentation")
     private fun initMetricsSwitch(){
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
@@ -185,7 +206,6 @@ class MainActivity : AppCompatActivity() {
         initMetricsSwitch()
     }
 
-
     private fun initMenu() {
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerlayout)
         val menuBtn = findViewById<ImageButton>(R.id.menu_button)
@@ -219,6 +239,7 @@ class MainActivity : AppCompatActivity() {
         /**/
 
     }
+
     private fun fetchWeatherData(cityCountry:String){
         lifecycleScope.launch{
             try {
@@ -286,7 +307,59 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Daily Notification Channel"
+            val descriptionText = "Channel for daily reminder notifications"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    private fun scheduleDailyNotification() {
+        val intent = Intent(applicationContext, Notification::class.java).apply {
+            putExtra(titleExtra, "Daily Reminder")
+            putExtra(messageExtra, "Don't forget to check the weather today!")
 
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            applicationContext,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, 9)  // 9 AM daily
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }
+
+        // If the time has already passed today, schedule for tomorrow
+        if (calendar.timeInMillis <= System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+        }
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
+        val calendar1 = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            add(Calendar.SECOND, 10)  // Trigger after 10 seconds
+        }
+
+    }
 }
 
 
