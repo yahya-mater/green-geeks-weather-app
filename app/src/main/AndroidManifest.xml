@@ -17,6 +17,10 @@
         <receiver android:name="com.example.notification.Notification"
             android:enabled="true"/>
         <activity
+            android:name=".activites.FavoritesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GreenGeeksWeatherApp" />
+        <activity
             android:name=".activites.SearchActivity"
             android:exported="false"
             android:theme="@style/Theme.GreenGeeksWeatherApp" />

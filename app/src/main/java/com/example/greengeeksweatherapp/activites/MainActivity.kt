@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -98,6 +99,20 @@ class MainActivity : AppCompatActivity() {
             cityNameTextView.text = prefsCity
             cityCountry = prefsCity
         }
+
+        val isFav = FavoriteManager.isFavorite(this, cityCountry)
+        val favSwitch = findViewById<Switch>(R.id.favSwitch)
+        if (isFav){
+            favSwitch.isChecked = isFav
+        }
+        favSwitch.setOnClickListener {
+            if (favSwitch.isChecked) {
+                FavoriteManager.addFavorite(this, cityCountry)
+            }else{
+                FavoriteManager.removeFavorite(this, cityCountry)
+            }
+        }
+
     }
 
     private fun setTodaysWeatherInfo(WeatherIcon:String="", WeatherName:String="", WeatherTemp:String="", WeatherTempHigh:String="", WeatherTempLow:String="", WeatherRainPer:String="", WeatherWindSpeed:String="",WeatherHumidityPer:String=""){
@@ -124,7 +139,7 @@ class MainActivity : AppCompatActivity() {
 
         WeatherTodayName.text = WeatherName
         WeatherTodayTemp.text = WeatherTemp + tempType
-        WeatherTodayHighLowTemp.text = "H:" + WeatherTempHigh + "  L:" + WeatherTempHigh
+        //WeatherTodayHighLowTemp.text = "H:" + WeatherTempHigh + "  L:" + WeatherTempHigh
         WeatherTodayRainValue.text = WeatherRainPer
         WeatherTodayWindSpeed.text = WeatherWindSpeed + speedType
         WeatherTodayHumidityValue.text = WeatherHumidityPer
@@ -220,9 +235,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initFavorites() {
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+
+        val favoritesItem = navigationView.menu.findItem(R.id.nav_FAV)
+        favoritesItem.title = "Favorites"
+
+        favoritesItem.setOnMenuItemClickListener {
+            val intent = Intent(this, FavoritesActivity::class.java)
+            startActivity(intent)
+
+            val favorites = FavoriteManager.getAllFavorites(this)
+
+            true
+        }
+    }
     private fun menuHandler() {
         initDarkThemeSwitch()
         initMetricsSwitch()
+        initFavorites()
     }
 
     private fun initMenu() {
@@ -386,6 +417,39 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+object FavoriteManager {
+    private const val PREFS_NAME = "favorites_prefs"
+    private const val FAVORITES_KEY = "favorites"
+
+    private fun getPrefs(context: Context): SharedPreferences {
+        return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }
+
+    fun addFavorite(context: Context, item: String) {
+        val prefs = getPrefs(context)
+        val favorites = prefs.getStringSet(FAVORITES_KEY, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        favorites.add(item)
+        prefs.edit().putStringSet(FAVORITES_KEY, favorites).apply()
+    }
+
+    fun removeFavorite(context: Context, item: String) {
+        val prefs = getPrefs(context)
+        val favorites = prefs.getStringSet(FAVORITES_KEY, mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+        favorites.remove(item)
+        prefs.edit().putStringSet(FAVORITES_KEY, favorites).apply()
+    }
+
+    fun isFavorite(context: Context, item: String): Boolean {
+        val prefs = getPrefs(context)
+        val favorites = prefs.getStringSet(FAVORITES_KEY, mutableSetOf()) ?: emptySet()
+        return favorites.contains(item)
+    }
+
+    fun getAllFavorites(context: Context): Set<String> {
+        val prefs = getPrefs(context)
+        return prefs.getStringSet(FAVORITES_KEY, emptySet()) ?: emptySet()
+    }
+}
 
 
 
