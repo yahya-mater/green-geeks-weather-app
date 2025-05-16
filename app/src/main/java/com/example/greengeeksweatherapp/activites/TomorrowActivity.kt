@@ -156,7 +156,7 @@ class TomorrowActivity : AppCompatActivity() {
                     tomorrowTemp=(tomorrowTemp*(9/5))+32
                 }
 
-                setTomorrowWeatherInfo(descriptionf.toLowerCase(),tomorrowDetails.weather[0].description,tomorrowTemp.toString(),"","",(tomorrowDetails.pop * 10000).toInt().toString()+"%",tomorrowDetails.wind.speed.toString(),tomorrowDetails.main.humidity.toString()+"%")
+                setTomorrowWeatherInfo(descriptionf.toLowerCase(),tomorrowDetails.weather[0].description,tomorrowTemp.toString(),"","",(tomorrowDetails.pop * 100).toInt().toString()+"%",tomorrowDetails.wind.speed.toString(),tomorrowDetails.main.humidity.toString()+"%")
 
                 items.removeAt(0)
                 items.removeAt(1)

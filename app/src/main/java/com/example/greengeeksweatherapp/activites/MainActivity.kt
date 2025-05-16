@@ -126,9 +126,17 @@ class MainActivity : AppCompatActivity() {
     private fun updateFavoriteIcon(imageView: ImageView, isFavorite: Boolean) {
         val iconRes = if (isFavorite) {
             R.drawable.favorite_filled
+
         } else {
             R.drawable.favorite_empty
         }
+
+        if(isFavorite){
+            Toast.makeText(this@MainActivity, "Added to favorite", Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(this@MainActivity, "Removed from favorite", Toast.LENGTH_LONG).show()
+        }
+
         imageView.setImageResource(iconRes)
     }
 
