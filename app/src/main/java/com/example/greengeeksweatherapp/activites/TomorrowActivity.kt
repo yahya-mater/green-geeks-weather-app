@@ -132,7 +132,7 @@ class TomorrowActivity : AppCompatActivity() {
                         tempf=(tempf*(9/5))+32
                     }
 
-                    if(timeStamp=="12:00 PM"){
+                    if(timeStamp=="3:00 PM"){
                         detailedTomorrowList.add(it)
                         items.add(TomorrowDomain(daytimeStamp, descriptionf.toLowerCase().replace(" ","_") ,descriptionf.toLowerCase().replace(" ","_"),"",tempf.toString() + tempType))
                     }
@@ -159,7 +159,7 @@ class TomorrowActivity : AppCompatActivity() {
                 setTomorrowWeatherInfo(tomorrowDetails.weather[0].main.lowercase(),tomorrowDetails.weather[0].description,tomorrowTemp.toString(),"","",(tomorrowDetails.pop * 100).toInt().toString()+"%",tomorrowDetails.wind.speed.toString(),tomorrowDetails.main.humidity.toString()+"%")
 
                 items.removeAt(0)
-                items.removeAt(1)
+                //items.removeAt(1)
                 items[0].day = "Tomorrow"
 
 
