@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     private var tempType:String = "°C"//"°F"
     private var speedType:String = "km\\h"//""
 
+
     private var cityCountry:String = "Aţ Ţafīlah,JO"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -190,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SuspiciousIndentation")
+
     private fun initMetricsSwitch(){
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
 
@@ -208,6 +209,7 @@ class MainActivity : AppCompatActivity() {
         if (isMetrics){
             tempType="°F"
             speedType = "mph"
+
         }else{
             tempType="°C"
             speedType = "km\\h"
@@ -377,8 +379,8 @@ class MainActivity : AppCompatActivity() {
     }
     private fun scheduleDailyNotification() {
         val intent = Intent(applicationContext, Notification::class.java).apply {
-            putExtra(titleExtra, "Daily Reminder")
-            putExtra(messageExtra, "Don't forget to check the weather today!")
+            putExtra(titleExtra, "weather app")
+            putExtra(messageExtra, "today the temprture is '$tempType\\$'")
 
         }
 
