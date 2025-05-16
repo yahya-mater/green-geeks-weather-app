@@ -88,21 +88,19 @@
 
                         <TextView
                             android:id="@+id/WeatherTomorrowTemp"
+                            style="@style/drawable_background_hourly_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:text="25"
                             android:textAlignment="viewStart"
                             android:textColor="@color/white"
-                            style="@style/drawable_background_hourly_text"
                             android:textSize="43sp" />
 
                         <TextView
                             android:id="@+id/WeatherTomorrowName"
+                            style="@style/drawable_background_hourly_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Mostly Cloudy"
-                            style="@style/drawable_background_hourly_text"
                             android:textAlignment="viewStart"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
@@ -133,7 +131,7 @@
                             android:id="@+id/WeatherTomorrowRainValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="22%"
+                            android:text="%"
                             android:textAlignment="center"
                             android:textColor="@color/white" />
 
@@ -163,7 +161,6 @@
                             android:id="@+id/WeatherTomorrowWindSpeed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="12 km/h"
                             android:textAlignment="center"
                             android:textColor="@color/white" />
 
@@ -193,7 +190,7 @@
                             android:id="@+id/WeatherTomorrowHumidityValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="18%"
+                            android:text="%"
                             android:textAlignment="center"
                             android:textColor="@color/white" />
 

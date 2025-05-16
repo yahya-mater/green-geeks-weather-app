@@ -53,21 +53,30 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/cityName"
-                        style="@style/background_back_1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center"
-                        android:text="Today"
-                        android:textAlignment="center"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_weight="0.8"/>
-
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/something1225"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="0.6"
+                        >
+
+                        <TextView
+                            android:id="@+id/cityName"
+                            style="@style/background_back_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/something125"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
@@ -138,7 +147,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_margin="16dp"
-                    android:text="Mostly Cloudy"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
@@ -148,7 +156,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="25"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="43sp" />
@@ -185,7 +192,7 @@
                             android:id="@+id/WeatherTodayRainValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="22%"
+                            android:text="%"
                             android:textAlignment="center"
                             android:textColor="@color/white" />
 
@@ -215,7 +222,6 @@
                             android:id="@+id/WeatherTodayWindSpeed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="12 km/h"
                             android:textAlignment="center"
                             android:textColor="@color/white" />
 
@@ -245,7 +251,7 @@
                             android:id="@+id/WeatherTodayHumidityValue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="18%"
+                            android:text="%"
                             android:textAlignment="center"
                             android:textColor="@color/white" />
 
@@ -379,7 +385,8 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/inner_layout"
 
-        app:menu="@menu/drawer_items" />
+        app:menu="@menu/drawer_items"
+        tools:visibility="gone" />
 
 
 
