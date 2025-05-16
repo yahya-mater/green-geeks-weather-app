@@ -7,18 +7,24 @@
     android:layout_height="match_parent"
     style="@style/background_back_1"
     tools:context=".activites.TomorrowActivity"
+    android:layoutDirection="ltr"
     >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         style="@style/drawable_background_hourly_text"
+
+        android:layoutDirection="ltr"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginBottom="75dp"
+
+            android:layoutDirection="ltr"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,7 +213,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:nestedScrollingEnabled="true" />
+                android:nestedScrollingEnabled="true"
+                android:layoutDirection="ltr" />
 
         </LinearLayout>
     </ScrollView>

@@ -164,7 +164,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+
+                    android:layoutDirection="ltr">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -293,23 +295,25 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"/>
+                android:paddingEnd="16dp"
+                android:layoutDirection="ltr"/>
 
             <LinearLayout
-                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="75dp"
+                android:layoutDirection="ltr"
                 android:orientation="horizontal"
-                android:layoutDirection="ltr">
+                android:padding="10dp">
 
                 <LinearLayout
                     style="@style/drawable_background_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.5"
                     android:layoutDirection="ltr"
-                    android:orientation="horizontal"
-                    android:layout_marginEnd="10dp">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imageView"
@@ -322,23 +326,23 @@
                         android:id="@+id/sunRiseTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="22sp"
+                        android:gravity="center"
                         android:text="TextView"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
 
-                        android:textColor="@color/white"/>
+                        android:textSize="22sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     style="@style/drawable_background_2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="0.5"
                     android:layoutDirection="ltr"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="10dp">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imageView214"
@@ -351,13 +355,13 @@
                         android:id="@+id/sunSetTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:textAlignment="center"
-                        android:textSize="22sp"
+                        android:gravity="center"
                         android:text="TextView"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
 
-                        android:textColor="@color/white"/>
+                        android:textSize="22sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -374,8 +378,8 @@
         android:layout_marginTop="25dp"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/inner_layout"
-        app:menu="@menu/drawer_items"
-        tools:visibility="gone" />
+
+        app:menu="@menu/drawer_items" />
 
 
 

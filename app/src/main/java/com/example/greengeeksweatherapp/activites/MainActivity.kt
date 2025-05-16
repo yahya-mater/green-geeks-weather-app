@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         val isFav = FavoriteManager.isFavorite(this, cityCountry)
         val favIcon  = findViewById<ImageView>(R.id.favSwitch)
         // Set the correct icon based on favorite state
-        updateFavoriteIcon(favIcon, isFav)
+        updateFavoriteIcon(favIcon, isFav, true)
 
         // Set the click listener to toggle favorite
         favIcon.setOnClickListener {
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun updateFavoriteIcon(imageView: ImageView, isFavorite: Boolean) {
+    private fun updateFavoriteIcon(imageView: ImageView, isFavorite: Boolean, firstLoad:Boolean = false) {
         val iconRes = if (isFavorite) {
             R.drawable.favorite_filled
 
@@ -131,10 +131,12 @@ class MainActivity : AppCompatActivity() {
             R.drawable.favorite_empty
         }
 
-        if(isFavorite){
-            Toast.makeText(this@MainActivity, "Added to favorite", Toast.LENGTH_LONG).show()
-        }else{
-            Toast.makeText(this@MainActivity, "Removed from favorite", Toast.LENGTH_LONG).show()
+        if (!firstLoad){
+            if(isFavorite){
+                Toast.makeText(this@MainActivity, "Added to favorite", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(this@MainActivity, "Removed from favorite", Toast.LENGTH_LONG).show()
+            }
         }
 
         imageView.setImageResource(iconRes)
@@ -378,8 +380,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     items.add(Hourly(timeStamp, tempf.toString() + tempType, descriptionf.toLowerCase().replace(" ","_")))
-                    Log.e("WeatherDebug", "descriptionf failed: ${descriptionf.toLowerCase().replace(" ","_")}")
-                }
+                    }
                 initRecyclerView(items)
 
 
