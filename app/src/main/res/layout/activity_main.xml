@@ -67,14 +67,28 @@
                         android:textStyle="bold"
                         android:layout_weight="0.8"/>
 
-                    <Switch
-                        android:id="@+id/favSwitch"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/something125"
+                        android:layout_width="45dp"
                         android:layout_height="45dp"
-                        android:layout_weight="0.2"
-                        android:layout_gravity="center"
-                        android:gravity="bottom"
-                        android:text="" />
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="16dp"
+                        style="@style/drawable_back_btn_background">
+
+
+                        <ImageView
+                            android:id="@+id/favSwitch"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="image"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/favorite_empty" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
 

@@ -9,7 +9,8 @@ data class ForecastList(
     val main: MainF,
     val weather: List<WeatherF>,
     val wind: WindF,
-    val dt_txt: String
+    val dt_txt: String,
+    val pop:Float
 )
 
 data class MainF(

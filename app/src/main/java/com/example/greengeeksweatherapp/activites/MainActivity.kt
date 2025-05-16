@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
 
     private var cityCountry:String = "Aţ Ţafīlah,JO"
 
+    private var currentTemp:Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -102,18 +104,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         val isFav = FavoriteManager.isFavorite(this, cityCountry)
-        val favSwitch = findViewById<Switch>(R.id.favSwitch)
-        if (isFav){
-            favSwitch.isChecked = isFav
-        }
-        favSwitch.setOnClickListener {
-            if (favSwitch.isChecked) {
-                FavoriteManager.addFavorite(this, cityCountry)
-            }else{
+        val favIcon  = findViewById<ImageView>(R.id.favSwitch)
+        // Set the correct icon based on favorite state
+        updateFavoriteIcon(favIcon, isFav)
+
+        // Set the click listener to toggle favorite
+        favIcon.setOnClickListener {
+            val currentlyFav = FavoriteManager.isFavorite(this, cityCountry)
+
+            if (currentlyFav) {
                 FavoriteManager.removeFavorite(this, cityCountry)
+                updateFavoriteIcon(favIcon, false)
+            } else {
+                FavoriteManager.addFavorite(this, cityCountry)
+                updateFavoriteIcon(favIcon, true)
             }
         }
 
+    }
+
+    private fun updateFavoriteIcon(imageView: ImageView, isFavorite: Boolean) {
+        val iconRes = if (isFavorite) {
+            R.drawable.favorite_filled
+        } else {
+            R.drawable.favorite_empty
+        }
+        imageView.setImageResource(iconRes)
     }
 
     private fun setTodaysWeatherInfo(WeatherIcon:String="", WeatherName:String="", WeatherTemp:String="", WeatherTempHigh:String="", WeatherTempLow:String="", WeatherRainPer:String="", WeatherWindSpeed:String="",WeatherHumidityPer:String=""){
@@ -252,6 +268,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
     private fun menuHandler() {
         initDarkThemeSwitch()
         initMetricsSwitch()
@@ -302,6 +319,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 var temp = response.main.temp.toInt()
+                currentTemp = temp
                 val pressure = response.main.pressure
                 val humidity = response.main.humidity
                 val Maindescription = response.weather[0].main//main description(e.g."Rain")
@@ -323,9 +341,10 @@ class MainActivity : AppCompatActivity() {
                     windSpeed /= 1.6
                     windSpeed = round(windSpeed)
                 }
-                setTodaysWeatherInfo(Maindescription.toLowerCase().replace(" ","_"),description,temp.toString(),"?","?","0%",windSpeed.toString(),humidity.toString()+"%")
 
                 val forecastRes=RetroFitclient.api.getForecastData(cityAndCountry=cityCountry, apiKey = "82c97b3355c019e0db0ec722ac742d2f")
+
+                setTodaysWeatherInfo(Maindescription.toLowerCase().replace(" ","_"),description,temp.toString(),"?","?",(forecastRes.list[0].pop * 10000).toInt().toString()+"%",windSpeed.toString(),humidity.toString()+"%")
 
                 val items:ArrayList<Hourly> = ArrayList()
                 var currentDay = SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date(forecastRes.list[0].dt*1000))
@@ -378,10 +397,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun scheduleDailyNotification() {
+        // Load preferences
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val isMetrics = prefs.getBoolean("metrics", false)
+
+        if(isMetrics){
+            currentTemp=(currentTemp*(9/5))+32
+        }
+
         val intent = Intent(applicationContext, Notification::class.java).apply {
             putExtra(titleExtra, "weather app")
-            putExtra(messageExtra, "today the temprture is '$tempType\\$'")
-
+            putExtra(messageExtra, "today the temprture is '${currentTemp.toString()}$tempType\\$'")
         }
 
         val pendingIntent = PendingIntent.getBroadcast(
